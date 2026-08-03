@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tamaki Oger</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a class="ig-link" href="https://www.instagram.com/tamaki.o20/" target="_blank" rel="noopener">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+      <rect x="2.5" y="2.5" width="19" height="19" rx="5"/>
+      <circle cx="12" cy="12" r="4.6"/>
+      <circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/>
+    </svg>
+  </a>
+  <h1 class="site-title"><a href="../index.html">Tamaki Oger</a></h1>
+  <nav class="site-nav">
+    <a href="../index.html" class="active">Gallery</a>
+    <a href="../about.html">About</a>
+    <a href="../contact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="detail-nav">
+  <a href="../index.html">Gallery</a> <span id="crumb"></span>
+</div>
+
+<div class="detail" id="detail"></div>
+
+<script src="../js/works-data.js"></script>
+<script>
+  const params = new URLSearchParams(location.search);
+  const slug = params.get('w');
+  const work = window.WORKS.find(w => w.slug === slug);
+  const detail = document.getElementById('detail');
+
+  if (!work) {
+    detail.innerHTML = `<p>Piece not found. <a href="../index.html">Back to gallery.</a></p>`;
+  } else {
+    document.title = `${work.title} — Tamaki Oger`;
+    document.getElementById('crumb').textContent = `/ ${work.title}`;
+    detail.innerHTML = `
+      <div class="detail-image">
+        <img src="../${work.image}" alt="${work.title}">
+      </div>
+      <div class="detail-info">
+        <h1>${work.title}</h1>
+        <p class="intro">${work.intro}</p>
+        <div class="meta">
+          ${work.medium}<br>
+          ${work.size}<br>
+          ${work.location}, ${work.year}
+        </div>
+      </div>
+    `;
+  }
+</script>
+
+</body>
+</html>

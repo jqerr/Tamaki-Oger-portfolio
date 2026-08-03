@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tamaki Oger</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a class="ig-link" href="https://www.instagram.com/tamaki.o20/" target="_blank" rel="noopener">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+      <rect x="2.5" y="2.5" width="19" height="19" rx="5"/>
+      <circle cx="12" cy="12" r="4.6"/>
+      <circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/>
+    </svg>
+  </a>
+  <h1 class="site-title"><a href="index.html">Tamaki Oger</a></h1>
+  <nav class="site-nav">
+    <div class="filter" id="filter">
+      <button class="filter-trigger active" id="filterTrigger">
+        Gallery
+        <svg class="caret" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.3" fill="none"/></svg>
+      </button>
+      <div class="filter-menu" id="filterMenu">
+        <button data-material="all" class="active">all</button>
+        <button data-material="Acrylic">acrylic</button>
+        <button data-material="Enamel">enamel</button>
+        <button data-material="Glass">glass</button>
+      </div>
+    </div>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="page-heading">
+  <p>a small selection of recent work &mdash; click any piece for details.</p>
+</div>
+
+<div class="gallery" id="gallery"></div>
+
+<script src="js/works-data.js"></script>
+<script>
+  const gallery = document.getElementById('gallery');
+  window.WORKS.forEach(work => {
+    const a = document.createElement('a');
+    a.className = 'tile';
+    a.dataset.material = work.material;
+    a.href = `work/piece.html?w=${encodeURIComponent(work.slug)}`;
+    a.innerHTML = `
+      <img src="${work.image}" alt="${work.title}" loading="lazy">
+      <div class="overlay">
+        <svg class="crosshair" width="34" height="34" viewBox="0 0 34 34">
+          <line x1="17" y1="2" x2="17" y2="32" stroke="#fff" stroke-width="1"/>
+          <line x1="2" y1="17" x2="32" y2="17" stroke="#fff" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="caption">${work.title}</div>
+    `;
+    gallery.appendChild(a);
+  });
+
+  // filter dropdown
+  const filter = document.getElementById('filter');
+  const trigger = document.getElementById('filterTrigger');
+  const menu = document.getElementById('filterMenu');
+
+  trigger.addEventListener('click', () => filter.classList.toggle('open'));
+
+  document.addEventListener('click', (e) => {
+    if (!filter.contains(e.target)) filter.classList.remove('open');
+  });
+
+  menu.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      menu.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const material = btn.dataset.material;
+      gallery.querySelectorAll('.tile').forEach(tile => {
+        tile.classList.toggle('hide', material !== 'all' && tile.dataset.material !== material);
+      });
+      filter.classList.remove('open');
+    });
+  });
+</script>
+
+</body>
+</html>
