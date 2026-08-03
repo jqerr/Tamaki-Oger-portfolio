@@ -363,3 +363,9 @@ img { max-width: 100%; display: block; }
   .detail { grid-template-columns: 1fr; padding: 20px 24px 60px; }
   .page-heading, .gallery, .detail-nav { padding-left: 24px; padding-right: 24px; }
 }
+
+#form-status {
+  margin-top: 14px;
+  font-size: 14px;
+  color: var(--muted);
+}
