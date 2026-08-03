@@ -1,0 +1,20 @@
+name: Check for missing images
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check every referenced image exists
+        run: |
+          grep -o '"images/[^"]*"' js/works-data.js | tr -d '"' | while read img; do
+            if [ ! -f "$img" ]; then
+              echo "Missing image file: $img"
+              exit 1
+            fi
+          done
+          echo "All referenced images exist."
