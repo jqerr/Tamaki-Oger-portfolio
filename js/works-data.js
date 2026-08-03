@@ -25,7 +25,7 @@ window.WORKS = [
     size: "40 × 50 cm",
     location: "Brisbane, Australia",
     year: "2021",
-    image: "images/01-peaceful-backyard-BROKEN.jpg"
+    image: "images/01-peaceful-backyard.jpg"
   },
   {
     slug: "red-path-at-dusk",
